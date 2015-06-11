@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 
     jshint: { // this is done
       files: {
-        src: ['/public/**/*.js']
+        src: ['**/*.js']
       },
       options: {
         force: 'true',
