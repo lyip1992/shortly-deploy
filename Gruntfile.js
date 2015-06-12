@@ -41,14 +41,14 @@ module.exports = function(grunt) {
     },
 
     jshint: { // this is done
-      files: {
+      files: [
         'Gruntfile.js',
         'app/**/*.js',
         'public/**/*.js',
         'lib/**/*.js',
         './*.js',
         'spec/**/*.js'
-      },
+      ],
       options: {
         force: 'true',
         jshintrc: '.jshintrc',
