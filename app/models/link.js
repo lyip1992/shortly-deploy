@@ -19,7 +19,7 @@ linkSchema.pre('save', function (next){
   var code = createHash(this.url);
   this.code = code;
   next();
-}
+});
 
 var Link = mongoose.model('User', linkSchema);
 
