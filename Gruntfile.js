@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       dist: {
         src: ['public/client/**/*.js'],
         dest: 'public/dist/<%= pkg.name %>.js'
-      },
+      }
     },
 
     mochaTest: {
@@ -27,20 +27,18 @@ module.exports = function(grunt) {
       }
     },
 
-    uglify: { // this is done
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+      },
       dist: {
-        options: {
-         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-        },
-        dist: {
-          files: {
-            'public/dist/<%= pkg.name %>.min.js': [ '<%= concat.dist.dest %>' ]
-          }
+        files: {
+          'public/dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
 
-    jshint: { // this is done
+    jshint: {
       files: [
         'Gruntfile.js',
         'app/**/*.js',
@@ -59,18 +57,18 @@ module.exports = function(grunt) {
       }
     },
 
-    cssmin: { // this is good to go
+    cssmin: {
       options: {
         keepSpecialComments: 0
       },
       dist: {
         files: {
-          'public/dist/style.min.css': [ 'public/style.css' ]
+          'public/dist/style.min.css': 'public/style.css'
         }
       }
     },
 
-    watch: { // this is goot to go
+    watch: {
       scripts: {
         files: [
           'public/client/**/*.js',
@@ -87,7 +85,7 @@ module.exports = function(grunt) {
       }
     },
 
-    shell: { // this is good to go
+    shell: {
       prodServer: {
         command: 'git push azure master',
         options: {
@@ -149,4 +147,6 @@ module.exports = function(grunt) {
     'build',
     'upload'
   ]);
+
+
 };
