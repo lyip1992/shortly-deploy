@@ -2,17 +2,17 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    concat: { // this is done
+    concat: {
       options: {
         separator: ';'
       },
       dist: {
         src: ['public/client/**/*.js'],
-        dest: 'public/dist/build.js'
+        dest: 'public/dist/<%= pkg.name %>.js'
       },
     },
 
-    mochaTest: { // this is done
+    mochaTest: {
       test: {
         options: {
           reporter: 'spec'
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
       }
     },
 
-    nodemon: { // this is done
+    nodemon: {
       dev: {
         script: 'server.js'
       }
@@ -29,15 +29,25 @@ module.exports = function(grunt) {
 
     uglify: { // this is done
       dist: {
-        files: {
-          'public/dist/build.min.js': [ 'public/dist/build.js' ]
+        options: {
+         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        },
+        dist: {
+          files: {
+            'public/dist/<%= pkg.name %>.min.js': [ '<%= concat.dist.dest %>' ]
+          }
         }
       }
     },
 
     jshint: { // this is done
       files: {
-        src: ['**/*.js']
+        'Gruntfile.js',
+        'app/**/*.js',
+        'public/**/*.js',
+        'lib/**/*.js',
+        './*.js',
+        'spec/**/*.js'
       },
       options: {
         force: 'true',
@@ -50,7 +60,10 @@ module.exports = function(grunt) {
     },
 
     cssmin: { // this is good to go
-      target: {
+      options: {
+        keepSpecialComments: 0
+      },
+      dist: {
         files: {
           'public/dist/style.min.css': [ 'public/style.css' ]
         }
@@ -76,7 +89,12 @@ module.exports = function(grunt) {
 
     shell: { // this is good to go
       prodServer: {
-        command: 'git push azure master'
+        command: 'git push azure master',
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
       }
     },
   });
